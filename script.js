@@ -2,7 +2,7 @@
  * Weather App
  * DONE: Complete getWeatherData() to return json response Promise
  * DONE: Complete searchCity() to get user input and get data using getWeatherData()
- * TODO: Complete showWeatherData() to set the data in the the html file from response
+ * DONE: Complete showWeatherData() to set the data in the the html file from response
  */
 
 // API_KEY for maps api
@@ -34,7 +34,10 @@ searchCity = () => {
   // CODE GOES HERE
   return getWeatherData(city)
     .then((resData) => {
-      return console.log(resData);
+      return resData;
+    })
+    .then((weatherData) => {
+      return showWeatherData(weatherData);
     })
     .catch((err) => {
       console.log(err);
@@ -47,4 +50,23 @@ searchCity = () => {
  */
 showWeatherData = (weatherData) => {
   //CODE GOES HERE
+  let cityName = document.getElementById("city-name");
+  let weatherType = document.getElementById("weather-type");
+  let tempElm = document.getElementById("temp");
+  let minTempElm = document.getElementById("min-temp");
+  let maxTempElm = document.getElementById("max-temp");
+
+  let { name } = weatherData;
+  let { temp, temp_min, temp_max } = weatherData.main;
+
+  tempTemplate = (tempData) => {
+    const celciusTemp = tempData - 273.15;
+    return Math.floor(celciusTemp) + " °C";
+  };
+
+  cityName.innerText = name;
+  weatherType.innerText = weatherData.weather[0].main;
+  tempElm.innerText = tempTemplate(temp);
+  minTempElm.innerText = tempTemplate(temp_min);
+  maxTempElm.innerText = tempTemplate(temp_max);
 };
