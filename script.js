@@ -70,3 +70,11 @@ showWeatherData = (weatherData) => {
   minTempElm.innerText = tempTemplate(temp_min);
   maxTempElm.innerText = tempTemplate(temp_max);
 };
+
+enterPress = (e) => {
+  if (e.key === "Enter") {
+    searchCity();
+  }
+};
+
+document.addEventListener("keydown", enterPress);
